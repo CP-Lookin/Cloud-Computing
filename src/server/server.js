@@ -3,12 +3,13 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const routes = require('../server/routes');
 const loadModel = require('../services/loadModel');
+const InputError = require('../exceptions/InputError');
 
 
 (async () => {
     const server = Hapi.server({
         port: 3000,
-        host: '0.0.0.0',
+        host: 'localhost',
         routes: {
             cors: {
               origin: ['*'],
@@ -32,7 +33,7 @@ const loadModel = require('../services/loadModel');
             newResponse.code(response.statusCode)
             return newResponse;
         }
-
+ 
         if (response.isBoom) {
             const newResponse = h.response({
                 status: 'fail',
