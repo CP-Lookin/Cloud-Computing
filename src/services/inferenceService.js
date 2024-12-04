@@ -11,11 +11,11 @@ async function predictClassification(models, image) {
 
         const faceShapeClasses = ['Oval', 'Round', 'Square'];
 
-        const faceShapePrediction = models.faceShapeModel.predict(tensor);
+        const faceShapePrediction = models.faceShapeModel.predict(tensor)
         const faceShapeScore = await faceShapePrediction.data();
         const faceShapeConfidenceScore = Math.max(...faceShapeScore) * 100;
         
-        const classResult = tf.argMax(prediction, 1).dataSync()[0];
+        const classResult = tf.argMax(faceShapePrediction, 1).dataSync()[0];
         const faceShapeLabel = faceShapeClasses[classResult];
 
         const genderPrediction = models.genderModel.predict(tensor);
@@ -23,9 +23,6 @@ async function predictClassification(models, image) {
         const genderConfidenceScore = Math.max(...genderScore) * 100;
 
         const genderLabel = genderConfidenceScore > 50 ? "Male" : "Female";
-
-
-
 
         return { faceShapeConfidenceScore, faceShapeLabel, genderConfidenceScore, genderLabel };
     } catch (error) {

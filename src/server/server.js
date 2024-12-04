@@ -17,14 +17,14 @@ const InputError = require('../exceptions/InputError');
         },
     })
 
-    const model = await loadModel();
-    server.app.model = model;
+    const models = await loadModel();
+    server.app.models = models;
 
     server.route(routes);
 
     server.ext('onPreResponse', function (request, h) {
         const response = request.response;
-
+ 
         if (response instanceof InputError) {
             const newResponse = h.response({
                 status: 'fail',
@@ -39,12 +39,12 @@ const InputError = require('../exceptions/InputError');
                 status: 'fail',
                 message: response.message
             })
-            newResponse.code(response.statusCode)
+            newResponse.code(400)
             return newResponse;
         }
+ 
         return h.continue;
     });
-
     
 
     await server.start();
