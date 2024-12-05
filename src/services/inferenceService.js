@@ -5,9 +5,10 @@ async function predictClassification(models, image) {
     try {
         const tensor = tf.node
             .decodeJpeg(image)
-            .resizeNearestNeighbor([224, 224])
+            .resizeBilinear([224, 224])
             .expandDims()
             .toFloat()
+            .div(tf.scalar(255));
 
         const faceShapeClasses = ['Oval', 'Round', 'Square'];
 

@@ -9,7 +9,7 @@ const InputError = require('../exceptions/InputError');
 (async () => {
     const server = Hapi.server({
         port: 3000,
-        host: 'localhost',
+        host: '0.0.0.0',
         routes: {
             cors: {
               origin: ['*'],
@@ -39,7 +39,7 @@ const InputError = require('../exceptions/InputError');
                 status: 'fail',
                 message: response.message
             })
-            newResponse.code(400)
+            newResponse.code(500)
             return newResponse;
         }
  

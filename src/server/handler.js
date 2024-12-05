@@ -15,15 +15,16 @@ async function postPredictHandler(request, h) {
     const data = {
       "id": id,
       "face shape result": faceShapeLabel,
-      "faceShapeConfidenceScore": faceShapeConfidenceScore,
       "gender result": genderLabel,
-      "genderConfidenceScore": genderConfidenceScore,
+      "confidence score (face shape)": faceShapeConfidenceScore,
       "createdAt": createdAt
     }
 
+    await storeData(id, data);
+
     const response = h.response({
         status: 'success',
-        message: faceShapeConfidenceScore > 99 ? 'Model is predicted successfully.' : 'Model is predicted successfully but under threshold. Please use the correct picture',
+        message: 'Model is predicted successfully.',
         data
       })
     response.code(201);
