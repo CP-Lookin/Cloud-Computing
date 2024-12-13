@@ -29,7 +29,7 @@ Create the .env file containing the ml model url (listed in project brief)
   nano .env
 ```
 
-run the server
+start the server
 ```bash
   npm run start
 ```
